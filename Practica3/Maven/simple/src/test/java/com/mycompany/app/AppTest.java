@@ -9,12 +9,14 @@ import org.junit.Test;
  */
 public class AppTest 
 {
+	public String comparacion = "Hello World!";
     /**
-     * Rigorous Test :-)
+     * Rigorous Test :-)     
      */
     @Test
     public void shouldAnswerWithTrue()
     {
-        assertTrue( true );
-    }
+		
+        assertTrue(comparacion.equals(App.getString()));
+    }    
 }
