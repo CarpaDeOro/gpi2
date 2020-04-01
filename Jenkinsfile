@@ -2,37 +2,39 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
-        sh './gradlew tasks compileDebugAndroidTestSources'
+                sh 'mvn -B -DskipTests clean package'				
             }
         }
-    stage('Arduino') {
+        
+		stage('Arduino') {
             steps {
-        sh 'make'
+				dir('p2/MyArduinoProject/src/FooProject/'){
+					sh 'make'
+				}
             }       
         }
+        
         stage('Maven') {
             steps {
-        sh 'mvn compile'
-                sh 'mvn test'
-        sh 'mvn validate'
-        sh 'mvn verify'
+				dir('Practica3/Maven/simple/'){
+					sh 'mvn compile'
+					sh 'mvn test'
+					sh 'mvn validate'
+					sh 'mvn verify'
+				}
             }       
         }
-    stage('Android') {
+        
+		stage('Android') {
             steps {
-                sh './gradlew task compileDebugAndroidTestSources'
-        sh './gradlew task compileDebugSources'
-        sh './gradlew task compileDebugUnitTestSources'
-        sh './gradlew task compileReleaseSources'
-        sh './gradlew task compileReleaseUnitTestSources'
+				dir('p2/GPI2_P2'){
+					sh './gradlew task compileDebugAndroidTestSources'
+					sh './gradlew task compileDebugSources'
+					sh './gradlew task compileDebugUnitTestSources'
+					sh './gradlew task compileReleaseSources'
+					sh './gradlew task compileReleaseUnitTestSources'
+				}
             }       
-        }
-
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-            }
-        }
+        }        
     }
 }
